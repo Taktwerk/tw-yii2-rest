@@ -1,19 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: harry
- * Date: 14-9-4
- * Time: 下午3:19
+ * Taktwerk.ch 2016
+ * tw-yii2-rest package
  */
 
-namespace ilestis\rest;
+namespace taktwerk\rest;
 
 use yii;
 
 class DateTimeHelper
 {
-
-    // php轉換時間戳為Y-m-d H:i:s的格式
+    /**
+     * @param $rawString
+     * @return int
+     */
     private static function createTimeStamp($rawString)
     {
         $stringArr = date_parse($rawString);
@@ -26,7 +26,10 @@ class DateTimeHelper
         return mktime($hour, $minute, $second, $month, $day, $year);
     }
 
-    // 判定一个时间是否是php时间
+    /**
+     * @param $time
+     * @return array|bool
+     */
     public static function isNormalTime($time)
     {
         $patterns = [
@@ -49,7 +52,10 @@ class DateTimeHelper
         return false;
     }
 
-    // php时间中有max选项时时间的转换
+    /**
+     * @param $time
+     * @return array|null
+     */
     public static function getMaxNormalTime($time)
     {
         $value = self::createTimeStamp($time['value']);

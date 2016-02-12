@@ -1,12 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: harry
- * Date: 14-9-13
- * Time: 下午7:22
+ * Taktwerk.ch 2016
+ * tw-yii2-rest package
  */
 
-namespace ilestis\rest;
+namespace taktwerk\rest;
 
 use Yii;
 use yii\helpers\ArrayHelper;
