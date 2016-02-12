@@ -76,11 +76,15 @@ class CreateQueryHelper
     }
 
 
+    /**
+     * Add a sort if there is a sort oder requested.
+     * @param $sort
+     * @param $table
+     * @param $query
+     */
     public static function addOrderSort($sort, $table, &$query)
     {
-        if ($sort == '') {
-            $order = $table . ".id DESC";
-        } else {
+        if (!empty($sort)) {
             $sorts = explode(',', $sort);
             foreach ($sorts as $sort) {
                 if (!strpos($sort, '.')) {
