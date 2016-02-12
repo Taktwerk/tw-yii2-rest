@@ -19,6 +19,10 @@ http://url/users?expand=addresses,friends.addresses&expand-fields=addresses.phon
 http://url/users?sort=addresses.phone DESC,id ASC
 ```
 
+4. Grouping
+```
+http://url/rooms?group=building.building_id=4
+```
 
 ## Installation
 
