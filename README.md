@@ -1,5 +1,5 @@
-概述
-------------
+#Yii2-Rest
+
 这个扩展主要是用于增强Yii2 rest api中IndexAction的功能.
 
 相对于官方的IndexAction，该扩展主要增加了以下几个功能
@@ -18,7 +18,7 @@ http://url/users?sort=addresses.phone DESC,id ASC
 ```
 4.允许为子资源的表设置别名（防止两个不同的子资源取同一张表时的命名冲突）
 ```
-use harryzheng0907\rest\ActiveRecord;
+use ilestis\rest\ActiveRecord;
 
 class User extends ActiveRecord
 {
@@ -43,7 +43,7 @@ class User extends ActiveRecord
 通过 [composer](http://getcomposer.org/download/)安装
 
 ```
-php composer.phar require harryzheng0907/yii2-rest
+php composer.phar require ilestis/yii2-rest
 ```
 使用
 ------------
@@ -51,8 +51,8 @@ php composer.phar require harryzheng0907/yii2-rest
 #### 使用概述
 使用方式其实就是两点
 
-1. 将IndexAction指向harryzheng0907\rest\IndexAction
-2. 使用的AR Model要继承自harryzheng0907\rest\ActiveRecord
+1. 将IndexAction指向ilestis\rest\IndexAction
+2. 使用的AR Model要继承自ilestis\rest\ActiveRecord
 
 #### 详细步骤
 1.新建一个全局父Controller,继承ActiveController，重新指定IndexAction
@@ -66,18 +66,18 @@ class ActiveController extends \yii\rest\ActiveController {
     {
         return ArrayHelper::merge(parent::actions(),[
             'index' => [
-                'class' => 'harryzheng0907\rest\IndexAction'
+                'class' => 'ilestis\rest\IndexAction'
             ]
         ]);
     }
 } 
 ```
-2.新建特定资源的AR Model，继承harryzheng0907\rest\ActiveRecord，如user
+2.新建特定资源的AR Model，继承ilestis\rest\ActiveRecord，如user
 ```
 namespace app\models;
 
 use Yii;
-use harryzheng0907\rest\ActiveRecord;
+use ilestis\rest\ActiveRecord;
 
 class User extends ActiveRecord
 {
@@ -117,7 +117,7 @@ Tips
 ------------
 1. 子资源的表的别名，必须与子资源的名称一致
 ```
-use harryzheng0907\rest\ActiveRecord;
+use ilestis\rest\ActiveRecord;
 
 class User extends ActiveRecord
 {

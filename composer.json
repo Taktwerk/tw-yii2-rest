@@ -1,7 +1,7 @@
 {
-  "name": "harryzheng0907/yii2-rest",
+  "name": "ilestis/yii2-rest",
   "type": "yii2-extension",
-  "description": "The enhanced restful api for Yii Framework 2.0",
+  "description": "The enhanced restful api for Yii Framework 2.0 based on HarryZheng0907's yii2-rest",
   "keywords": [
     "yii2",
     "rest",
@@ -10,14 +10,14 @@
   ],
   "license": "BSD",
   "support": {
-    "issues": "https://github.com/harryzheng0907/yii2-rest/issues",
-    "wiki": "https://github.com/harryzheng0907/yii2-rest/wiki",
-    "source": "https://github.com/harryzheng0907/yii2-rest"
+    "issues": "https://github.com/ilestis/yii2-rest/issues",
+    "wiki": "https://github.com/ilestis/yii2-rest/wiki",
+    "source": "https://github.com/ilestis/yii2-rest"
   },
   "authors": [
     {
-      "name": "Harry Zheng",
-      "email": "harryzheng0907@gmail.com"
+      "name": "Ilestis",
+      "email": "jeremy@ilestis.com"
     }
   ],
   "require": {
@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "harryzheng0907\\rest\\": ""
+      "ilestis\\rest\\": ""
     }
   }
 }
