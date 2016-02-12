@@ -9,7 +9,6 @@
 namespace ilestis\rest;
 
 use yii;
-use harryzheng0907\rest\CreateQueryHelper;
 use yii\data\ActiveDataProvider;
 
 class IndexAction extends \yii\rest\IndexAction
