@@ -37,29 +37,37 @@ class CreateQueryHelper
         $filter_fields = self::getQueryParams($ignore);
         $condition_transform_functions = self::conditionTransformFunctions();
 
-        foreach($filter_fields as $key => $value) {
-            if ($value == '' || in_array($key, self::$exclude_field))
+        foreach($filter_fields as $key => $value){
+            if($value == '' || in_array($key,self::$exclude_field))
                 continue;
             $field_key = $key;
-            if (!strpos($key, '.')) {
-                $field_key = $modelClass::tableName() . '.' . $key;
-            } else {
-                $relation_model = substr($field_key, 0, strrpos($key, '.'));
+            if(!strpos($key,'.')){
+                $field_key =  $modelClass::tableName().'.'.$key ;
+            }else{
+                $relation_model = substr($field_key,0,strrpos($key,'.'));
                 $model->joinWith($relation_model);
-                if (strpos($relation_model, '.')) {
-                    $temp = substr($field_key, strrpos($field_key, '.'));
-                    $field_key = substr($relation_model, strrpos($relation_model, '.') + 1) . $temp;
+                if(strpos($relation_model,'.')){
+                    $temp = substr($field_key,strrpos($field_key,'.'));
+                    $field_key = substr($relation_model,strrpos($relation_model,'.')+1).$temp;
+                    $field_key = str_replace($relation_model, $relation_model::tableName(), $field_key);
+                } else {
+                    // Build the relation's tale name
+                    $baseModel = new $modelClass;
+                    $relationModel = $baseModel->getRelation($relation_model);
+                    $relationModel = new $relationModel->modelClass;
+                    $field_key = str_replace($relation_model . '.', $relationModel->tableName() . '.', $field_key);
                 }
             }
 
             $type = 'EQUAL';
-            if (preg_match("/^[A-Z]+_/", $value, $matches) && array_key_exists(trim($matches[0], '_'), $condition_transform_functions)) {
-                $type = trim($matches[0], '_');
-                $value = str_replace($matches[0], '', $value);
+            if(preg_match("/^[A-Z]+_/",$value, $matches) && array_key_exists(trim($matches[0],'_'),$condition_transform_functions)){
+                $type = trim($matches[0],'_');
+                $value = str_replace($matches[0],'',$value);
             }
 
-            $wheres = ArrayHelper::merge($wheres, [$condition_transform_functions[$type]($field_key, $value)]);
+            $wheres = ArrayHelper::merge($wheres, [$condition_transform_functions[$type]($field_key,$value)]);
         }
+
         if(count($wheres) > 1) {
             $model->andWhere($wheres);
         }
