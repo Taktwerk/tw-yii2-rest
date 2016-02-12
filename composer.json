@@ -1,5 +1,5 @@
 {
-  "name": "ilestis/yii2-rest",
+  "name": "taktwerk/tw-yii2-rest",
   "type": "yii2-extension",
   "description": "The enhanced restful api for Yii Framework 2.0 based on HarryZheng0907's yii2-rest",
   "keywords": [
