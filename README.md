@@ -1,104 +1,37 @@
-#Yii2-Rest
+#TW-Yii2-Rest
 
-这个扩展主要是用于增强Yii2 rest api中IndexAction的功能.
+Forked and modified from HarryZheng0907's [yii-rest](https://github.com/HarryZheng0907/yii2-rest).
 
-相对于官方的IndexAction，该扩展主要增加了以下几个功能
+This package adds some practical search options for your Yii2 ActiveControler's index action.
 
-1.搜索功能
+## Functionality
+
+1. Search capability
 ```
 http://url/users?id=1&username=LIKE_dmi&created_at=MAX_1398153715&addresses.city=南京
 ```
-2.显示多级子资源(官方只支持二级子资源（通过expand关键字指定），如users?expand=address）
+2. Multi-level expanding of relations
 ```
 http://url/users?expand=addresses,friends.addresses&expand-fields=addresses.phone,friends.addresses
 ```
-3.允许通过子资源排序
+3. Sorting by child relation
 ```
 http://url/users?sort=addresses.phone DESC,id ASC
 ```
-4.允许为子资源的表设置别名（防止两个不同的子资源取同一张表时的命名冲突）
-```
-use ilestis\rest\ActiveRecord;
 
-class User extends ActiveRecord
-{
-    public static function tableName()
-    {
-        return 'user';
-    }
-    
-    public function getMainAddresses()
-    {
-        return $this->hasMany(Address::className(), ['user_id' => 'id'],'mainAddresses');
-    }
-    public function getOtherAddresses()
-    {
-        return $this->hasMany(Address::className(), ['user_id' => 'id'],'otherAddresses');
-    }
-}
-```
 
-安装
-------------
-通过 [composer](http://getcomposer.org/download/)安装
+## Installation
 
 ```
-php composer.phar require ilestis/yii2-rest
+php composer.phar require taktwerk/tw-yii2-rest
 ```
-使用
-------------
 
-#### 使用概述
-使用方式其实就是两点
+## Usage
 
-1. 将IndexAction指向ilestis\rest\IndexAction
-2. 使用的AR Model要继承自ilestis\rest\ActiveRecord
-
-#### 详细步骤
-1.新建一个全局父Controller,继承ActiveController，重新指定IndexAction
-```
-namespace app\controllers;
-
-use yii\helpers\ArrayHelper;
-
-class ActiveController extends \yii\rest\ActiveController {
-    public function actions()
-    {
-        return ArrayHelper::merge(parent::actions(),[
-            'index' => [
-                'class' => 'ilestis\rest\IndexAction'
-            ]
-        ]);
-    }
-} 
-```
-2.新建特定资源的AR Model，继承ilestis\rest\ActiveRecord，如user
-```
-namespace app\models;
-
-use Yii;
-use ilestis\rest\ActiveRecord;
-
-class User extends ActiveRecord
-{
-    public static function tableName()
-    {
-        return 'user';
-    }
-}
-```
-3.新建特定资源的controller，如user，继承第一步新建的全局controller
-```
-namespace app\controllers;
-
-class UserController extends \app\controllers\ActiveController {
-    public $modelClass = 'app\models\User';
-} 
-```
-4.完成
-
-搜索方式
-------------
+### IndexAction
+Change the IndexAction of your Active Controlers to point to `taktwerk\rest\IndexAction`
+   
+## Examples
 ```
 EQUAL:http://url/users?username=EQUAL_a  // username = 'a'
 NOTEQUAL:http://url/users?username=NOTEQUAL_a  // username != 'a'
@@ -112,28 +45,3 @@ MIN:http://url/users?age_min=MIN_10  // age >= 10
 MAX:http://url/users?age_max=Max_60  //age <= 60
 RANGE:http://url/users?birthdate=RANGE_2015-03  //birthdate<=2015-03-31 AND birthdate >= 2015-03-01
 ```
-
-Tips
-------------
-1. 子资源的表的别名，必须与子资源的名称一致
-```
-use ilestis\rest\ActiveRecord;
-
-class User extends ActiveRecord
-{
-    public static function tableName()
-    {
-        return 'user';
-    }
-    
-    public function getMainAddresses()
-    {
-        return $this->hasMany(Address::className(), ['user_id' => 'id'],'mainAddresses');
-    }
-    public function getOtherAddresses()
-    {
-        return $this->hasMany(Address::className(), ['user_id' => 'id'],'otherAddresses');
-    }
-}
-```
-2.设置排序时，DESC/ASC不可省略
