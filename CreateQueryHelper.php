@@ -84,6 +84,7 @@ class CreateQueryHelper
     {
         if (!empty($sort)) {
             $sorts = explode(',', $sort);
+            $order = [];
             foreach ($sorts as $sort) {
                 if (!strpos($sort, '.')) {
                     preg_match('/\w+\s+(DESC|ASC)/', $sort, $sort_field);
@@ -102,7 +103,10 @@ class CreateQueryHelper
             }
             $query->select[] = $table . ".*";
         }
-        $query->orderBy($order);
+
+        if(!empty($order)) {
+            $query->orderBy($order);
+        }
     }
 
     /**
